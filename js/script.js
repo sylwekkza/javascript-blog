@@ -60,18 +60,20 @@
         const selectArticle = document.querySelectorAll(articleSelector);
 
         for(let article of selectArticle){
-            console.log(article);
+            
+            /* [DONE] get the article id */
+
+            const getArticleId = article.getAttribute("id");
+            console.log(getArticleId);
+        
+            /* find the title element */
+        
+            /* get the title from the title element */
+        
+            /* create HTML of the link */
+        
+            /* insert link into titleList */
         }
-      
-          /* get the article id */
-      
-          /* find the title element */
-      
-          /* get the title from the title element */
-      
-          /* create HTML of the link */
-      
-          /* insert link into titleList */
     }
       
     generateTitleLinks();
