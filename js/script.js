@@ -55,7 +55,13 @@
 
         selectTitleList.innerHTML = '';
       
-        /* for each article */
+        /* [DONE] for each article */
+
+        const selectArticle = document.querySelectorAll(articleSelector);
+
+        for(let article of selectArticle){
+            console.log(article);
+        }
       
           /* get the article id */
       
