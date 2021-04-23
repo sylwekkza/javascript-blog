@@ -77,9 +77,11 @@
             const linkHTML = '<li><a href="#' + getArticleId + '"><span>' + getTitleName + '</span></a></li>';
             console.log(linkHTML);
 
-            /* insert link into titleList */
+            /* [DONE] insert link into titleList */
+
+            selectTitleList.innerHTML = selectTitleList.innerHTML + linkHTML;
         }
     }
-      
+
     generateTitleLinks();
 }
