@@ -66,15 +66,17 @@
             const getArticleId = article.getAttribute("id");
             console.log(getArticleId);
         
-            /* [DONE] find the title element */
+            /* [DONE] find the title element */   
+            /* [DONE] get the title from the title element */
 
-            const getTitleElement = article.querySelector(titleSelector);
-            console.log(getTitleElement);
+            const getTitleName = article.querySelector(titleSelector).innerHTML;
+            console.log(getTitleName);
         
-            /* get the title from the title element */
-        
-            /* create HTML of the link */
-        
+            /* [DONE] create HTML of the link */
+
+            const linkHTML = '<li><a href="#' + getArticleId + '"><span>' + getTitleName + '</span></a></li>';
+            console.log(linkHTML);
+
             /* insert link into titleList */
         }
     }
