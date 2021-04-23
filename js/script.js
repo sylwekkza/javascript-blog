@@ -66,7 +66,10 @@
             const getArticleId = article.getAttribute("id");
             console.log(getArticleId);
         
-            /* find the title element */
+            /* [DONE] find the title element */
+
+            const getTitleElement = article.querySelector(titleSelector);
+            console.log(getTitleElement);
         
             /* get the title from the title element */
         
