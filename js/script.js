@@ -1,5 +1,7 @@
 'use strict'; 
 {
+    /* function which shows specific article after clicking on article list */
+
     const titleClickHandler = function(event){
         event.preventDefault();
         const clickedElement = this;
@@ -37,17 +39,13 @@
         targetArticle.classList.add('active');
     }
 
-    const links = document.querySelectorAll('.titles a');
-    
-    for(let link of links){
-        link.addEventListener('click', titleClickHandler);
-    }
-
-    const articleSelector = '.post';
-    const titleSelector = '.post-title';
-    const titleListSelector = '.titles';
+    /* function that generates title links */
 
     function generateTitleLinks(){
+
+        const articleSelector = '.post';
+        const titleSelector = '.post-title';
+        const titleListSelector = '.titles';
 
         /* [DONE] remove contents of titleList */
 
@@ -64,24 +62,29 @@
             /* [DONE] get the article id */
 
             const getArticleId = article.getAttribute("id");
-            console.log(getArticleId);
         
             /* [DONE] find the title element */   
             /* [DONE] get the title from the title element */
 
             const getTitleName = article.querySelector(titleSelector).innerHTML;
-            console.log(getTitleName);
         
             /* [DONE] create HTML of the link */
 
             const linkHTML = '<li><a href="#' + getArticleId + '"><span>' + getTitleName + '</span></a></li>';
-            console.log(linkHTML);
 
             /* [DONE] insert link into titleList */
 
-            selectTitleList.innerHTML = selectTitleList.innerHTML + linkHTML;
-        }
-    }
+            selectTitleList.insertAdjacentHTML('beforeend', linkHTML);
 
+            /* using titleClickHandler function - showing right specific article after click on article list */
+
+            const links = document.querySelectorAll('.titles a');
+    
+            for(let link of links){
+                link.addEventListener('click', titleClickHandler);
+            }
+        }  
+    }
+    
     generateTitleLinks();
 }
