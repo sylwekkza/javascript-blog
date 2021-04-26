@@ -11,7 +11,7 @@
         const activeLinks = document.querySelectorAll('.titles a.active');
     
         for(let activeLink of activeLinks){
-            activeLink.classList.remove('active')
+            activeLink.classList.remove('active');
         }
      
     /* [DONE] add class 'active' to the clicked link */
