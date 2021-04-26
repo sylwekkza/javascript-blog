@@ -52,7 +52,7 @@
 
         /* [DONE] remove contents of titleList */
 
-        const selectTitleList = document.querySelector(titleListSelector)
+        const selectTitleList = document.querySelector(titleListSelector);
 
         selectTitleList.innerHTML = '';
       
@@ -81,11 +81,11 @@
 
             /* [DONE] using titleClickHandler function - showing right specific article after click on article list */
 
-            let links = document.querySelectorAll('.titles a');
-            let firstActiveTag = document.querySelector('.titles a');
+            const links = document.querySelectorAll('.titles a');
+            const firstActiveTag = document.querySelector('.titles a');
+            firstActiveTag.classList.add('active');
     
             for(let link of links){
-                firstActiveTag.classList.add('active');
                 link.addEventListener('click', titleClickHandler);
             }
         }   
