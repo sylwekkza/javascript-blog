@@ -82,13 +82,14 @@
             /* [DONE] using titleClickHandler function - showing right specific article after click on article list */
 
             const links = document.querySelectorAll('.titles a');
-            const firstActiveTag = document.querySelector('.titles a');
-            firstActiveTag.classList.add('active');
     
             for(let link of links){
                 link.addEventListener('click', titleClickHandler);
             }
         }   
+        
+        const firstActiveTag = document.querySelector('.titles a');
+        firstActiveTag.classList.add('active');
     }
     
     generateTitleLinks();
