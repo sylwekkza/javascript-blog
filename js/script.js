@@ -11,9 +11,9 @@
         const activeLinks = document.querySelectorAll('.titles a.active');
     
         for(let activeLink of activeLinks){
-            activeLink.classList.remove('active');
+            activeLink.classList.remove('active')
         }
-    
+     
     /* [DONE] add class 'active' to the clicked link */
 
         clickedElement.classList.add('active');
@@ -37,27 +37,30 @@
     /* [DONE] add class 'active' to the correct article */
 
         targetArticle.classList.add('active');
-    }
+
+        const articles = '.posts article.active';
+        let articleSelection = document.querySelectorAll(articles);
+        console.log(articleSelection);
+     }
 
     /* function that generates title links */
 
-    function generateTitleLinks(){
-
+    const generateTitleLinks = function (){
         const articleSelector = '.post';
         const titleSelector = '.post-title';
         const titleListSelector = '.titles';
 
         /* [DONE] remove contents of titleList */
 
-        const selectTitleList = document.querySelector(titleListSelector);
+        const selectTitleList = document.querySelector(titleListSelector)
 
         selectTitleList.innerHTML = '';
       
         /* [DONE] for each article */
 
-        const selectArticle = document.querySelectorAll(articleSelector);
+        const listedArticles = document.querySelectorAll(articleSelector);
 
-        for(let article of selectArticle){
+        for(let article of listedArticles){
             
             /* [DONE] get the article id */
 
@@ -70,20 +73,22 @@
         
             /* [DONE] create HTML of the link */
 
-            const linkHTML = '<li><a href="#' + getArticleId + '"><span>' + getTitleName + '</span></a></li>';
+            const linkHTML = '<li><a class="article-list" href="#' + getArticleId + '"><span>' + getTitleName + '</span></a></li>';
 
             /* [DONE] insert link into titleList */
 
             selectTitleList.insertAdjacentHTML('beforeend', linkHTML);
 
-            /* using titleClickHandler function - showing right specific article after click on article list */
+            /* [DONE] using titleClickHandler function - showing right specific article after click on article list */
 
-            const links = document.querySelectorAll('.titles a');
+            let links = document.querySelectorAll('.titles a');
+            let firstActiveTag = document.querySelector('.titles a');
     
             for(let link of links){
+                firstActiveTag.classList.add('active');
                 link.addEventListener('click', titleClickHandler);
             }
-        }  
+        }   
     }
     
     generateTitleLinks();
