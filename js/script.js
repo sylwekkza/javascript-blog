@@ -3,9 +3,10 @@
     const articleSelector = '.post';
     const titleSelector = '.post-title';
     const titleListSelector = '.titles';
-    const articleTagsSelector = ".post-tags .list";
-    const authorNameSelector = ".post-author";
+    const articleTagsSelector = '.post-tags .list';
+    const authorNameSelector = '.post-author';
     const listedArticles = document.querySelectorAll(articleSelector);
+    const tagsListSelector = '.tags.list';
     
     /* FUNCTION WHICH SHOWS SPECIFIC ARTICLE AFTER CLICKING ON TITLE LIST */
 
@@ -87,16 +88,21 @@
                 link.addEventListener('click', titleClickHandler);
             }
         }   
-        
-        const firstActiveTag = document.querySelector('.titles a');
-        firstActiveTag.classList.add('active'); 
     }   
     
     generateTitleLinks();
 
+    const firstActiveTag = document.querySelector('.titles a');
+    firstActiveTag.classList.add('active'); 
+
+
     /* FUNCTION THAT GENERATES TAGS FOR ARTICLES */
 
     const generateTags = function (){
+    
+        /* [NEW] create a new variable allTags with an empty array */
+        
+        let allTags = [];
 
         /* [DONE] START LOOP: for every article: */
 
@@ -124,17 +130,32 @@
                 
                 /* [DONE] generate HTML of the link */
 
-                const linkTagHtml = '<li><a href="#tag-' + tag + '">' + tag + '</a></li>';
+                const linkTagHTML = '<li><a href="#tag-' + tag + '">' + tag + '</a></li>';
 
                 /* [DONE] add generated code to html variable */
 
-                html = html + linkTagHtml;
+                html = html + linkTagHTML;
+
+                /* [NEW] check if this link is NOT already in allTags */
+
+                if(allTags.indexOf(linkTagHTML) == -1){
+                    /* [NEW] add generated code to allTags array */
+                    allTags.push(linkTagHTML);
+                }
             }
 
             /* [DONE] insert HTML of all the links into the tags wrapper */
         
             tagsWrapper.innerHTML = html;
         }
+
+            /* [NEW] find list of tags in right column */
+
+            const tagList = document.querySelector('.tags');
+
+            /* [NEW] add html from allTags to tagList */
+
+            tagList.innerHTML = allTags.join(' ');
     }
     
     generateTags();
@@ -256,6 +277,7 @@
 
         generateTitleLinks('[data-author = "' + authorHashReplace + '"]');
 
+
     }
 
     function addClickListenersToAuthors(){
@@ -269,7 +291,3 @@
 
     addClickListenersToAuthors();
 }
-
-
-    
-    
