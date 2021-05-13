@@ -6,7 +6,6 @@
     const articleTagsSelector = '.post-tags .list';
     const authorNameSelector = '.post-author';
     const listedArticles = document.querySelectorAll(articleSelector);
-    const tagsListSelector = '.tags.list';
     
     /* FUNCTION WHICH SHOWS SPECIFIC ARTICLE AFTER CLICKING ON TITLE LIST */
 
@@ -55,9 +54,9 @@
 
         /* [DONE] remove contents of titleList */
 
-        const selectTitleList = document.querySelector(titleListSelector);
+        const titleList = document.querySelector(titleListSelector);
 
-        selectTitleList.innerHTML = '';
+        titleList.innerHTML = '';
       
         /* [DONE] for each article */
 
@@ -65,20 +64,20 @@
             
             /* [DONE] get the article id */
 
-            const getArticleId = article.getAttribute("id");
+            const articleId = article.getAttribute("id");
         
             /* [DONE] find the title element */   
             /* [DONE] get the title from the title element */
 
-            const getTitleName = article.querySelector(titleSelector).innerHTML;
+            const titleName = article.querySelector(titleSelector).innerHTML;
         
             /* [DONE] create HTML of the link */
 
-            const linkHTML = '<li><a class="article-list" href="#' + getArticleId + '"><span>' + getTitleName + '</span></a></li>';
+            const titleLinkHTML = '<li><a class="article-list" href="#' + articleId + '"><span>' + titleName + '</span></a></li>';
 
             /* [DONE] insert link into titleList */
 
-            selectTitleList.insertAdjacentHTML('beforeend', linkHTML);
+            titleList.insertAdjacentHTML('beforeend', titleLinkHTML);
 
             /* [DONE] using titleClickHandler function - showing right specific article after click on article list */
 
@@ -88,13 +87,12 @@
                 link.addEventListener('click', titleClickHandler);
             }
         }   
+
+        const firstActiveTitle = document.querySelector('.titles a');
+        firstActiveTitle.classList.add('active'); 
     }   
     
     generateTitleLinks();
-
-    const firstActiveTag = document.querySelector('.titles a');
-    firstActiveTag.classList.add('active'); 
-
 
     /* FUNCTION THAT GENERATES TAGS FOR ARTICLES */
 
@@ -118,11 +116,11 @@
         
             /* [DONE] get tags from data-tags attribute */
 
-            const getTagsNames = article.getAttribute('data-tags');
+            const tagNames = article.getAttribute('data-tags');
         
             /* [DONE] split tags into array */
 
-            const articleTagsArray = getTagsNames.split(' ');
+            const articleTagsArray = tagNames.split(' ');
         
             /* [DONE] START LOOP: for each tag */
 
@@ -149,13 +147,13 @@
             tagsWrapper.innerHTML = html;
         }
 
-            /* [NEW] find list of tags in right column */
+        /* [NEW] find list of tags in right column */
 
-            const tagList = document.querySelector('.tags');
+        const tagList = document.querySelector('.tags');
 
-            /* [NEW] add html from allTags to tagList */
+        /* [NEW] add html from allTags to tagList */
 
-            tagList.innerHTML = allTags.join(' ');
+        tagList.innerHTML = allTags.join(' ');
     }
     
     generateTags();
@@ -190,12 +188,12 @@
 
         /* find all tag links with "href" attribute equal to the "href" constant */
       
-            const tagsEqualWithHref = document.querySelectorAll('a[href="' + href + '"]');
+        const linksForSelectedTag = document.querySelectorAll('a[href="' + href + '"]');
 
         /* LOOP: for each found tag link add class active */
       
-        for(let tagEqual of tagsEqualWithHref){
-            tagEqual.classList.add('active');
+        for(let linkForSelectedTag of linksForSelectedTag){
+            linkForSelectedTag.classList.add('active');
         }
       
         /* execute function "generateTitleLinks" with article selector as argument */
@@ -227,7 +225,7 @@
             
             /* [DONE] find wrapper for authors name */
 
-            const selectAllAuthors = article.querySelector(authorNameSelector);
+            const authorNameDiv = article.querySelector(authorNameSelector);
 
             /* [DONE] make html variable with "by" string */
 
@@ -235,19 +233,19 @@
 
             /* [DONE] get data-author attribute from article data-author property */
 
-            const getDataAuthorContent = article.getAttribute('data-author');
+            const authorName = article.getAttribute('data-author');
 
             /* [DONE] create proper html syntax */
         
-            const authorHtml = '<a href="#author-' + getDataAuthorContent + '">' + getDataAuthorContent + '</a>'
+            const authorHTML = '<a href="#author-' + authorName + '">' + authorName + '</a>'
 
             /* [DONE] add generated html to variable */
             
-            html = html + authorHtml;
+            html = html + authorHTML;
 
             /* [DONE] insert html variable to wrapper for authors name */
 
-            selectAllAuthors.innerHTML = html;
+            authorNameDiv.innerHTML = html;
         }
     }
 
@@ -261,7 +259,7 @@
 
         const clickedElementId = clickedElement.getAttribute('href');
 
-        const authorHashReplace = clickedElementId.replace('#author-', '');
+        const authorName = clickedElementId.replace('#author-', '');
 
         const allActiveAuthors = document.querySelectorAll('a.active[href^="#author-"]');
 
@@ -269,15 +267,13 @@
             activeAuthor.classList.remove('active');
         }
 
-        const authorsWithHrefEqual = document.querySelectorAll('a[href="' + clickedElementId + '"]');
+        const selectedAuthorLinks = document.querySelectorAll('a[href="' + clickedElementId + '"]');
 
-        for (let authorEqual of authorsWithHrefEqual) {
-            authorEqual.classList.add('active');
+        for (let selectedAuthorLink of selectedAuthorLinks) {
+            selectedAuthorLink.classList.add('active');
         }
 
-        generateTitleLinks('[data-author = "' + authorHashReplace + '"]');
-
-
+        generateTitleLinks('[data-author = "' + authorName + '"]');
     }
 
     function addClickListenersToAuthors(){
