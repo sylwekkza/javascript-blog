@@ -5,9 +5,10 @@
     const titleListSelector = '.titles';
     const articleTagsSelector = '.post-tags .list';
     const authorNameSelector = '.post-author';
-    const listedArticles = document.querySelectorAll(articleSelector);
+    const authorsListSelector = '.authors';
     const cloudClassCount = 3;
     const cloudClassPrefix = 'tag-size-';
+    const listedArticles = document.querySelectorAll(articleSelector);
     
     /* FUNCTION WHICH SHOWS SPECIFIC ARTICLE AFTER CLICKING ON TITLE LIST */
 
@@ -106,7 +107,6 @@
         }
 
         for(let tag in tags){
-            console.log('tag: ' + tag + ' is used: ' + tags[tag] + ' times');
 
             if(tags[tag] > params.max){
                 params.max = tags[tag];
@@ -192,7 +192,6 @@
         /* [DONE] add html from allTags to tagList */
 
         const tagsParams = calculateTagsParams(allTags);
-        console.log('tagsParams:', tagsParams)
 
         let allTagsHTML = '';
 
@@ -272,6 +271,8 @@
       
     const generateAuthors = function(){
 
+        let allAuthors = [];
+
         /* [DONE] start loop for every article */
 
         for(let article of listedArticles){
@@ -287,10 +288,15 @@
             /* [DONE] get data-author attribute from article data-author property */
 
             const authorName = article.getAttribute('data-author');
+            console.log(authorName);
 
             /* [DONE] create proper html syntax */
         
-            const authorHTML = '<a href="#author-' + authorName + '">' + authorName + '</a>'
+            const authorHTML = '<a href="#author-' + authorName + '">' + authorName + '</a>'            
+
+            if(allAuthors.indexOf(authorHTML) === -1){
+                allAuthors.push(authorHTML);
+            }
 
             /* [DONE] add generated html to variable */
             
@@ -300,6 +306,10 @@
 
             authorNameDiv.innerHTML = html;
         }
+
+        const authorsList = document.querySelector(authorsListSelector);
+
+        authorsList.innerHTML = '<li>' + allAuthors.join('</li><li>') + '</li>'
     }
 
     generateAuthors();
@@ -332,8 +342,13 @@
     function addClickListenersToAuthors(){
 
         const authors = document.querySelectorAll('.post-author a')
+        const authorsRightSideBar = document.querySelectorAll('.authors a')
 
         for(let author of authors){
+            author.addEventListener('click', authorClickHandler);
+        }
+
+        for(let author of authorsRightSideBar){
             author.addEventListener('click', authorClickHandler);
         }
     }
