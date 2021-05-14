@@ -6,6 +6,8 @@
     const articleTagsSelector = '.post-tags .list';
     const authorNameSelector = '.post-author';
     const listedArticles = document.querySelectorAll(articleSelector);
+    const cloudClassCount = 3;
+    const cloudClassPrefix = 'tag-size-';
     
     /* FUNCTION WHICH SHOWS SPECIFIC ARTICLE AFTER CLICKING ON TITLE LIST */
 
@@ -46,7 +48,7 @@
         targetArticle.classList.add('active');
      }
 
-    /* FUNCTION THAT GENERATES TITLE links */
+    /* FUNCTION THAT GENERATES TITLE LINKS */
 
     const generateTitleLinks = function(customSelector = '') {
 
@@ -93,6 +95,39 @@
     }   
     
     generateTitleLinks();
+
+    /* FUNCTION THAT CALCULATES WHICH TAG IS LEAST AND MOST USED IN ALL ARTICLES */
+
+    const calculateTagsParams = function(tags) {
+
+        const params = {
+            max: 0,
+            min: 9999
+        }
+
+        for(let tag in tags){
+            console.log('tag: ' + tag + ' is used: ' + tags[tag] + ' times');
+
+            if(tags[tag] > params.max){
+                params.max = tags[tag];
+            }
+    
+            if(tags[tag] < params.min){
+                params.min = tags[tag];
+            }
+        }
+        
+        return params;
+    }
+
+    /* FUNCTION THAT GENERATES CLASS FOR ESTABLISGING TAG SIZE DEPENDING ON THEIR OCCURENCE */
+
+    const calculateClassTag = function(count, params) {
+
+        const classNumber = Math.floor( ( (count - params.min) / (params.max - params.min) ) * (cloudClassCount - 1) + 1 );
+
+        return cloudClassPrefix + classNumber;
+    }
 
     /* FUNCTION THAT GENERATES TAGS FOR ARTICLES */
 
@@ -156,16 +191,19 @@
 
         /* [DONE] add html from allTags to tagList */
 
+        const tagsParams = calculateTagsParams(allTags);
+        console.log('tagsParams:', tagsParams)
+
         let allTagsHTML = '';
 
         for(let tag in allTags){
 
-            allTagsHTML += '<li><a href="#tag-' + tag + '">' + tag + '</a> <span>(' + allTags[tag] + ')</span></li>';
+            allTagsHTML += '<li><a href="#tag-' + tag + '" class="'+ calculateClassTag(allTags[tag], tagsParams) + '">' + tag + '</a></li>';
         }
 
         tagList.innerHTML = allTagsHTML;
     }
-    
+
     generateTags();
 
     const tagClickHandler = function(event){
@@ -215,10 +253,15 @@
         /* find all links to tags */
 
         const tags = document.querySelectorAll('.post-tags a');
+        const tagsFromCloud = document.querySelectorAll('.tags a');
 
         /* START LOOP: for each link && add tagClickHandler as event listener for that link && END LOOP: for each link */
       
         for(let tag of tags){
+            tag.addEventListener('click', tagClickHandler);
+        }
+
+        for(let tag of tagsFromCloud){
             tag.addEventListener('click', tagClickHandler);
         }
     }

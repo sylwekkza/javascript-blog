@@ -134,3 +134,26 @@ body {
     color: $color-link;
   }
 }
+
+[class^=tag-size-] {
+  text-decoration: none;
+}
+
+.tag-size-1 {
+  font-size: 110%;
+  opacity: 0.8;
+}
+
+.tag-size-2 {
+  font-size: 135%;
+}
+
+.tag-size-3 {
+  font-size: 180%;
+}
+
+.tags li {
+  display: inline;
+  margin-right: 5px;
+  word-break: break-all;
+}
