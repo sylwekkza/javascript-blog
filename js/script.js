@@ -47,7 +47,7 @@
     /* [DONE] add class 'active' to the correct article */
 
         targetArticle.classList.add('active');
-     }
+    }
 
     /* FUNCTION THAT GENERATES TITLE LINKS */
 
@@ -96,6 +96,39 @@
     }   
     
     generateTitleLinks();
+
+    /* [NEW] FUNCTION THAT SHOWS SPECIFIC ARTICLE AFTER CHOOSING ONE OF THE CLOUD TAGS and AUTHOR LIST */
+    
+    const showArticleOfActiveTag = function(){
+
+        /* find title with class active */ 
+    
+        const activeLinks = document.querySelector('.titles a.active');
+
+        /* find article with class active and remove this class */
+
+        const activeArticles = document.querySelectorAll('.post.active');
+
+        for(let article of activeArticles){
+            article.classList.remove('active');
+        }
+
+        /* get attribute -> id */
+
+        const titleId = activeLinks.getAttribute('href');
+
+        /* remove hash */
+
+        const titleIdWithoutHash = titleId.replace('#', '');
+    
+        /* find article with same href of title link as its ID */
+
+        const selectedArticle = document.getElementById(titleIdWithoutHash);
+
+        /* add class active to it */
+
+        selectedArticle.classList.add('active');
+    }
 
     /* FUNCTION THAT CALCULATES WHICH TAG IS LEAST AND MOST USED IN ALL ARTICLES */
 
@@ -172,10 +205,11 @@
                 /* [DONE] check if this link is NOT already in allTags */
 
                 if(!allTags[tag]){
-                    /* [NEW] add generated code to allTags object */
+
                     allTags[tag] = 1;
                 }
                 else {
+                    
                     allTags[tag]++;
                 }
             }
@@ -246,6 +280,8 @@
         /* execute function "generateTitleLinks" with article selector as argument */
 
         generateTitleLinks('[data-tags~="' + tag + '"]');
+
+        showArticleOfActiveTag();
     }
 
     function addClickListenersToTags(){
@@ -288,7 +324,6 @@
             /* [DONE] get data-author attribute from article data-author property */
 
             const authorName = article.getAttribute('data-author');
-            console.log(authorName);
 
             /* [DONE] create proper html syntax */
         
@@ -310,6 +345,8 @@
         const authorsList = document.querySelector(authorsListSelector);
 
         authorsList.innerHTML = '<li>' + allAuthors.join('</li><li>') + '</li>'
+
+        showArticleOfActiveTag();
     }
 
     generateAuthors();
@@ -337,6 +374,8 @@
         }
 
         generateTitleLinks('[data-author = "' + authorName + '"]');
+
+        showArticleOfActiveTag();
     }
 
     function addClickListenersToAuthors(){
@@ -355,3 +394,4 @@
 
     addClickListenersToAuthors();
 }
+
