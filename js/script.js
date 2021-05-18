@@ -39,14 +39,51 @@
     /* [DONE] get 'href' attribute from the clicked link */
 
         const articleIdSelector = clickedElement.getAttribute("href");
+        console.log(articleIdSelector);
 
     /* [DONE] find the correct article using the selector (value of 'href' attribute) */
 
         const targetArticle = document.querySelector(articleIdSelector);
+        console.log(targetArticle);
 
     /* [DONE] add class 'active' to the correct article */
 
         targetArticle.classList.add('active');
+    }
+
+     /* [NEW] FUNCTION THAT SHOWS SPECIFIC ARTICLE AFTER CHOOSING ONE OF THE CLOUD TAGS and AUTHOR LIST */
+    
+    const showArticleOfActiveTag = function(){
+
+        /* find title with class active */ 
+    
+        const activeLink = document.querySelector('.titles a.active');
+
+        /* find article with class active and remove this class */
+
+        const activeArticles = document.querySelectorAll('.post.active');
+
+        for(let article of activeArticles){
+            article.classList.remove('active');
+        }
+
+        /* get attribute -> id */
+
+        const titleId = activeLink.getAttribute('href');
+        console.log(titleId);
+
+        /* remove hash */
+
+        const titleIdWithoutHash = titleId.replace('#', '');
+    
+        /* find article with same href of title link as its ID */
+
+        const selectedArticle = document.getElementById(titleIdWithoutHash);
+        console.log(selectedArticle)
+
+        /* add class active to it */
+
+        selectedArticle.classList.add('active');
     }
 
     /* FUNCTION THAT GENERATES TITLE LINKS */
@@ -96,39 +133,6 @@
     }   
     
     generateTitleLinks();
-
-    /* [NEW] FUNCTION THAT SHOWS SPECIFIC ARTICLE AFTER CHOOSING ONE OF THE CLOUD TAGS and AUTHOR LIST */
-    
-    const showArticleOfActiveTag = function(){
-
-        /* find title with class active */ 
-    
-        const activeLinks = document.querySelector('.titles a.active');
-
-        /* find article with class active and remove this class */
-
-        const activeArticles = document.querySelectorAll('.post.active');
-
-        for(let article of activeArticles){
-            article.classList.remove('active');
-        }
-
-        /* get attribute -> id */
-
-        const titleId = activeLinks.getAttribute('href');
-
-        /* remove hash */
-
-        const titleIdWithoutHash = titleId.replace('#', '');
-    
-        /* find article with same href of title link as its ID */
-
-        const selectedArticle = document.getElementById(titleIdWithoutHash);
-
-        /* add class active to it */
-
-        selectedArticle.classList.add('active');
-    }
 
     /* FUNCTION THAT CALCULATES WHICH TAG IS LEAST AND MOST USED IN ALL ARTICLES */
 
@@ -307,7 +311,7 @@
       
     const generateAuthors = function(){
 
-        let allAuthors = [];
+        let allAuthors = {};
 
         /* [DONE] start loop for every article */
 
@@ -329,8 +333,11 @@
         
             const authorHTML = '<a href="#author-' + authorName + '">' + authorName + '</a>'            
 
-            if(allAuthors.indexOf(authorHTML) === -1){
-                allAuthors.push(authorHTML);
+            if(!allAuthors[authorName]){
+                allAuthors[authorName] = 1;
+            }
+            else {
+                allAuthors[authorName]++;
             }
 
             /* [DONE] add generated html to variable */
@@ -344,7 +351,13 @@
 
         const authorsList = document.querySelector(authorsListSelector);
 
-        authorsList.innerHTML = '<li>' + allAuthors.join('</li><li>') + '</li>'
+        let allAuthorsHTML = '';
+
+        for(let author in allAuthors){
+            allAuthorsHTML +=  '<li><a href="#author-' + author + '">' +  author + '</a>' + ' ' + '(' + allAuthors[author] + ')' + '</li>';
+        }
+
+        authorsList.innerHTML = allAuthorsHTML;
 
         showArticleOfActiveTag();
     }
